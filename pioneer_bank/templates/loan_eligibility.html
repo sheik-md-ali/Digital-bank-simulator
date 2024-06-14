@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>Loan Eligibility</title>
+  <link rel="stylesheet" type="text/css" href="../static/css/loan_eligibility.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="../static/js/loan_eligibility.js"></script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Pioneer Bank Loan Eligibility</h1>
+    </header>
+    <hr>
+    <form id="eligibilityForm" method="POST" class="form">
+      <p>
+        <label for="salary">Annual Income</label>
+        <input id="salary" type="number" value="" required>
+      </p>
+      <br>
+      <p>
+        <label for="creditScore">Credit Score</label>
+        <input id="creditScore" type="number" value="" required>
+      </p>
+      <br>
+      <p>
+        <label for="workExperience">Months at Job</label>
+        <input id="workExperience" type="number" value="" required>
+      </p>
+      <br>
+      <button type="submit" id="submit" class="flat-button">Am I Eligible?</button>
+      <button type="button" id="clear" class="flat-button">Clear</button>&nbsp&nbsp
+      <p>
+        <label>Result:</label>&nbsp&nbsp
+        <span id="result"></span>
+      </p>
+    </form>
+    <!-- Next button for redirection -->
+    <button type="button" id="nextButton" class="flat-button">Next</button>
+    <!-- Back to Dashboard button -->
+    <button type="button" id="nextButton" class="flat-button" onclick="redirectToDashboard()">Back to Dashboard</button>
+  
+  </div>
+  <!-- Table to display loan applications -->
+  <div class="container">
+    <h2>Loan Status</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Account No</th>
+                <th>Amount</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if loan_applications %}
+            <!-- Display loan applications -->
+              {% for application in loan_applications %}
+              <tr>
+                  <td>{{ application.name }}</td>
+                  <td>{{ application.user.bank_account_number }}</td>
+                  <td>{{ application.loan_amount }}</td>
+                  <td>{{ application.status }}</td>
+              </tr>
+              {% endfor %}
+              {% elif loans_given %}
+              <!-- Display loans given -->
+              {% for loan_given in loans_given %}
+              <tr>
+                  <td>{{ loan_given.name }}</td>
+                  <td>{{ loan_given.account_number }}</td>
+                  <td>{{ loan_given.amount }}</td>
+                  <td>Approved</td>
+              </tr>
+            {% endfor %}
+          {% endif %}
+        </tbody>
+    </table>
+  </div>
+
+
+  <script>
+    function redirectToDashboard() {
+        window.location.href = '/dashboard';
+    }
+  </script>
+
+</body>
+</html>

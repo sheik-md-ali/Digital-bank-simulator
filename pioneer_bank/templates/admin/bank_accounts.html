@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank Accounts</title>
+    <style>
+        /* Body styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* Table styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        th, td {
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #007bff;
+            color: #fff;
+            text-transform: uppercase;
+        }
+        td {
+            color: #333;
+        }
+        .profile-photo-link {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .profile-photo-link:hover {
+            transform: scale(1.1);
+        }
+        .profile-photo-link img {
+            width: 100%;
+            height: auto;
+        }
+
+        /* Card styles */
+        .card {
+        display: none;
+        border: 1px solid #ccc;
+        padding: 10px;
+        margin-top: 10px;
+        background-color: #fff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        /* Center the card horizontally */
+        margin: 0 auto;
+        /* Set a max-width for better readability */
+        max-width: 500px;
+        }
+
+        /* Details button styles */
+        .details-button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .details-button:hover {
+            background-color: #0056b3;
+        }
+
+        .details-button:focus {
+            outline: none;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            overflow: auto;
+        }
+        .modal-content {
+            margin: 20px auto;
+            background-color: transparent;
+            border-radius: 8px;
+            padding: 20px;
+            max-width: 300px; 
+            max-height: 300px; 
+            text-align: center; 
+            overflow: hidden; 
+        }
+
+        .modal-content img {
+            max-width: 300px;
+            max-height: 300px;
+            width: auto;
+            height: auto;
+            display: block;
+            margin: auto;
+            border: none;
+        }
+
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        /* Back button style */
+        .back-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>List of Users with Bank Accounts</h1>
+    <a href="{{ url_for('admin_dashboard') }}" class="back-button">Back to Dashboard</a>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Bank Account Number</th>
+                <th>Profile Photo</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users_with_bank_accounts %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.first_name }}</td>
+                <td>{{ user.last_name }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.bank_account_number if user.bank_account_number else 'N/A' }}</td>
+                <td>
+                    {% if user.get_profile_picture() %}
+                        <span class="profile-photo-link" onclick="openModal('{{ user.get_profile_picture() }}')">
+                            <img src="data:image/jpeg;base64,{{ user.get_profile_picture() }}" alt="Profile Photo">
+                        </span>
+                    {% else %}
+                        No photo available
+                    {% endif %}
+                </td>
+                <td><button class="details-button" onclick="toggleCard('{{ user.id }}')">Details</button></td>
+            </tr>
+            <!-- Card section to display detailed information -->
+            <tr>
+                <td colspan="7">
+                    <div class="card" id="card_{{ user.id }}">
+                        {% if user.bank_account %}
+                            <p><strong>Title:</strong> {{ user.bank_account.title }}</p>
+                            <p><strong>Gender:</strong> {{ user.bank_account.gender }}</p>
+                            <p><strong>Telephone:</strong> {{ user.bank_account.telephone }}</p>
+                            <p><strong>Street Address:</strong> {{ user.bank_account.street_address }}</p>
+                            <p><strong>City:</strong> {{ user.bank_account.city }}</p>
+                            <p><strong>State:</strong> {{ user.bank_account.state }}</p>
+                            <p><strong>Postal Code:</strong> {{ user.bank_account.postal_code }}</p>
+                            <p><strong>Country:</strong> {{ user.bank_account.country }}</p>
+                            <p><strong>Citizenship:</strong> {{ user.bank_account.citizenship }}</p>
+                            <p><strong>Date of Birth:</strong> {{ user.bank_account.dob }}</p>
+                            <p><strong>Occupation:</strong> {{ user.bank_account.occupation }}</p>
+                            <p><strong>Monthly Income:</strong> {{ user.bank_account.monthly_income }}</p>
+                            <p><strong>ID Proof:</strong> {{ user.bank_account.id_proof }}</p>
+                        {% else %}
+                            <p>No bank account details found.</p>
+                        {% endif %}
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>        
+    </table>
+
+    <!-- Modal for displaying larger image -->
+    <div id="myModal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="modal-img" src="">
+    </div>
+
+    <script>
+        function openModal(imageData) {
+            var modal = document.getElementById("myModal");
+            var modalImg = document.getElementById("modal-img");
+            modal.style.display = "block";
+            modalImg.src = "data:image/jpeg;base64," + imageData;
+            modalImg.style.display = "block";
+            modalImg.style.margin = "auto";
+        }
+    
+        function closeModal() {
+            var modal = document.getElementById("myModal");
+            modal.style.display = "none";
+        }
+    
+        function toggleCard(userId) {
+            var card = document.getElementById("card_" + userId);
+            if (card.style.display === 'none' || card.style.display === '') {
+                card.style.display = 'block';
+                card.style.margin = '20px auto'; // Center the card horizontally
+            } else {
+                card.style.display = 'none';
+            }
+        }
+    </script>
+    
+        
+</body>
+</html>

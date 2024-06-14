@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Admin Dashboard</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+    <link rel="stylesheet" href="../static/css/dashboard.css" />
+</head>
+<body>
+<div class="app">
+    <header class="app-header">
+        <div class="app-header-logo">
+            <div class="logo">
+                <span class="logo-icon">
+                    <img src="{{ url_for('static', filename='images/pionner_logo.jpg') }}" alt="Logo">
+                </span>
+                <h1 class="logo-title">
+                    <span>Pioneer</span>
+                    <span>Bank</span>
+                </h1>
+            </div>
+        </div>
+        <div class="app-header-navigation">
+            <div class="tabs">
+                <p>WELCOME ADMIN</p>
+                <!-- Display additional admin-related information or actions if needed -->
+            </div>
+        </div>
+        <div class="app-header-actions">
+            <button class="user-profile" onclick="window.location.href='/admin_dashboard'">
+                <!-- Display the admin's name dynamically -->
+                <span>{{ admin_name }}</span>
+                <span>
+                    <img src="{{ url_for('static', filename='images/admin.jpg') }}" />
+                </span>
+            </button>
+            <div class="app-header-actions-buttons">
+                <button class="save-button" onclick="window.location.href='/logout'">
+                    Logout
+                </button>
+            </div>
+        </div>
+        <div class="app-header-mobile">
+            <button class="icon-button large">
+                <i class="ph-list"></i>
+            </button>
+        </div>
+    </header>
+    <div class="app-body-main-content">
+        <section class="statistics-section">
+            <h2>Statistics</h2>
+            <div class="tiles">
+                <article class="tile">
+                    <a href="/admin/users">
+                        <div class="tile-header">
+                            <i class="ph-users"></i>
+                            <h3>
+                                <span>No of Users</span>
+                            </h3>
+                        </div>
+                        <span>{{ num_users }}</span>
+                    </a>
+                </article>
+                <article class="tile">
+                    <a href="/admin/bank_accounts">
+                        <div class="tile-header">
+                            <i class="ph-bank"></i>
+                            <h3>
+                                <span>No of Bank Accounts</span>
+                            </h3>
+                        </div>
+                        <span>{{ num_bank_accounts }}</span>
+                    </a>
+                </article>
+                <article class="tile">
+                    <a href="/admin/contact_messages">
+                        <div class="tile-header">
+                            <i class="ph-chat-circle"></i>
+                            <h3>
+                                <span>No of Contact Messages</span>
+                            </h3>
+                        </div>
+                        <span>{{ num_contacts }}</span>
+                    </a>
+                </article>
+                <article class="tile" style="background-color: #3f88c5;">
+                    <a href="/admin/loan_applications">
+                        <div class="tile-header">
+                            <i class="ph-credit-card"></i>
+                            <h3>
+                                <span>No of Loan Applications</span>
+                            </h3>
+                        </div>
+                        <span>{{ num_loan_applications }}</span>
+                    </a>
+                </article>
+                <article class="tile" style="background-color: #6bbf59;">
+                    <a href="/admin/bank_balance">
+                        <div class="tile-header">
+                            <i class="ph-database"></i>
+                            <h3>
+                                <span>Total Bank Balance</span>
+                            </h3>
+                        </div>
+                        <span>{{ total_bank_balance }}</span>
+                    </a>
+                </article>
+                <article class="tile" style="background-color: #f5d63d;">
+                    <a href="/admin/loans_given">
+                        <div class="tile-header">
+                            <i class="ph-money"></i>
+                            <h3>
+                                <span>Loans Given</span>
+                            </h3>
+                        </div>
+                        <span>{{ loans_given }}</span>
+                    </a>
+                </article>
+                <article class="tile" style="background-color: #b76ae4;">
+                    <a href="/admin/transaction_history_admin">
+                        <div class="tile-header">
+                            <i class="ph-transaction"></i>
+                            <h3>
+                                <span>Total Transactions</span>
+                            </h3>
+                        </div>
+                        <span>{{ total_transactions }}</span>
+                    </a>
+                </article>
+                <!-- New Tile for Sub-Admins -->
+                <article class="tile" style="background-color: #ff6a00;">
+                    <a href="/admin/add_admin">
+                        <div class="tile-header">
+                            <i class="ph-user"></i>
+                            <h3>
+                                <span>No of Sub-Admins</span>
+                            </h3>
+                        </div>
+                        <span>{{ total_admins }}</span>
+                    </a>
+                </article>
+                <!-- End of New Tile -->
+            </div>
+        </section>
+    </div>
+    <footer class="footer">
+        <h1>Team Pioneer's<small></small></h1>
+        <div>
+            Empowering Innovations<br />
+            Crafting the Future
+        </div>
+    </footer>
+</div>
+<script src="https://unpkg.com/phosphor-icons"></script>
+</body>
+</html>

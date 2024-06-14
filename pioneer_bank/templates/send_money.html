@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send Money</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="../static/css/send_money.css">
+</head>
+<body>
+    <div class="send-form">
+        <h1>Send Money</h1>
+        <form action="/send_money" method="POST">
+            <div class="field">
+                <div class="icon"><i class="fas fa-user"></i></div>
+                <input type="text" id="recipient_account_number" name="recipient_account_number" placeholder="Recipient Account Number" required>
+            </div>
+            <div class="field">
+                <div class="icon"><i class="fas fa-money-bill-wave"></i></div>
+                <input type="number" id="amount" name="amount" placeholder="Amount" required>
+            </div>
+            <div class="field">
+                <div class="icon"><i class="fas fa-lock"></i></div>
+                <input type="password" id="transaction_pin" name="transaction_pin" placeholder="Transaction PIN" required>
+            </div>
+            <button type="submit">Send Money</button>
+        </form>
+        <div class="link">
+            <a href="/dashboard">Back to Dashboard</a>
+        </div>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class="flashed-messages">
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+    </div>
+</body>
+</html>

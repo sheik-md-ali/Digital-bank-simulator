@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Loans Given</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* Body styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* Table styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        th, td {
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #007bff;
+            color: #fff;
+            text-transform: uppercase;
+        }
+        td {
+            color: #333;
+        }
+
+        /* Back button style */
+        .back-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Deduct button style */
+        .deduct-button {
+            padding: 8px 16px;
+            background-color: #d9534f; /* Red */
+            border: none;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            font-size: 16px;
+            margin: 4px 2px;
+            transition-duration: 0.4s;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .deduct-button:hover {
+            background-color: #c9302c; /* Darker red */
+        }
+    </style>
+</head>
+<body>
+    <h1>Loans Given</h1>
+    <a href="{{ url_for('admin_dashboard') }}" class="back-button">Back to Dashboard</a>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Account No</th>
+                <th>Amount</th>
+                <th>Loan Duration</th>
+                <th>Date Given</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for loan_given in loans_given %}
+            <tr>
+                <td>{{ loan_given.name }}</td>
+                <td>{{ loan_given.account_number }}</td>
+                <td>{{ loan_given.amount }}</td>
+                <td>{{ loan_given.loan_duration }}</td>
+                <td>{{ loan_given.date_given }}</td>
+                <td>
+                    {% if loan_given.loan_period_expired %}
+                        <form action="/deduct_money/{{ loan_given.id }}" method="POST">
+                            <button type="submit" class="deduct-button">Deduct Money</button>
+                        </form>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Check Balance</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="../static/css/check_balance.css">
+</head>
+<body>
+    <div class="check-form">
+        <h1>Check Balance</h1>
+        <form action="/check_balance" method="POST">
+            <div class="field">
+                <div class="icon"><i class="fas fa-lock"></i></div>
+                <input type="password" id="transaction_pin" name="transaction_pin" placeholder="Enter Transaction PIN">
+            </div>
+            <button type="submit">Check Balance</button> 
+            <div class="link">
+                <a href="/dashboard">Back to Dashboard</a> 
+            </div>
+        </form>
+        {% if error %}
+        <ul class="flashed-messages">
+            <p>{{ error }}</p>
+        </ul>
+        {% endif %}
+        {% if balance %}
+        <ul class="flashed-messages">
+            <p>Your current balance is: ${{ balance }}</p>
+            </ul>
+        {% endif %}
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if editing %}Edit Bank Account Details{% else %}Bank Account Registration Form{% endif %}</title>
+    <link rel="stylesheet" href="../static/css/createaccount.css">
+</head>
+<body>
+    <div class="container">
+        <header>{% if editing %}Edit Bank Account Details{% else %}Bank Account Registration Form{% endif %}</header>
+        <form method="POST" action="{% if editing %}/update_account{% else %}/register_account{% endif %}" enctype="multipart/form-data">
+            <div class="fields">
+                <div class="input-field">
+                    <label for="title" class="title">Title</label>
+                    <select id="title" name="title" required>
+                        <option value="Mr.">Mr.</option>
+                        <option value="Ms.">Ms.</option>
+                        <option value="Miss">Miss</option>
+                        <option value="Mrs">Mrs</option>
+                        <!-- Add more options as needed -->
+                    </select>
+                </div>
+                <div class="input-field">
+                    <label for="first_name" class="title">First Name</label>
+                    <input type="text" id="first_name" name="first_name" placeholder="First" required>
+                </div>
+                <div class="input-field">
+                    <label for="middle_name" class="title">Middle Name</label>
+                    <input type="text" id="middle_name" name="middle_name" placeholder="Middle">
+                </div>
+                <div class="input-field">
+                    <label for="last_name" class="title">Last Name</label>
+                    <input type="text" id="last_name" name="last_name" placeholder="Last" required>
+                </div>
+            </div>
+            <div class="input-field">
+                <label for="gender" class="title">Gender</label>
+                <select id="gender" name="gender" required>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            <div class="fields">
+                <div class="input-field">
+                    <label for="telephone" class="title">Mobile number</label>
+                    <input type="tel" id="telephone" name="telephone" maxlength="10" placeholder="Mobile Number" required>
+                </div>
+                <div class="input-field">
+                    <label for="street_address" class="title">Street Address</label>
+                    <input type="text" id="street_address" name="street_address" placeholder="Street Address" required>
+                </div>
+                <div class="input-field">
+                    <label for="city" class="title">City</label>
+                    <input type="text" id="city" name="city" placeholder="City" required>
+                </div>
+                <div class="input-field">
+                    <label for="state" class="title">State</label>
+                    <input type="text" id="state" name="state" placeholder="State" required>
+                </div>
+                <div class="input-field">
+                    <label for="postal_code" class="title">Postal / Zip Code</label>
+                    <input type="text" id="postal_code" name="postal_code" placeholder="Postal / Zip Code" required>
+                </div>
+                <div class="input-field">
+                    <label for="country" class="title">Country</label>
+                    <input type="text" id="country" name="country" placeholder="Country" required>
+                </div>
+            </div>
+
+            <div class="fields">
+                <div class="input-field">
+                    <label for="citizenship" class="title">Citizenship</label>
+                    <select id="citizenship" name="citizenship" required>
+                        <option value="Indian">Indian</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="input-field">
+                    <label for="dob" class="title">DOB</label>
+                    <input type="date" id="dob" name="dob" required>
+                </div>
+                <div class="input-field">
+                    <label for="occupation" class="title">Occupation</label>
+                    <input type="text" id="occupation" name="occupation" placeholder="Occupation" required>
+                </div>
+                <div class="input-field">
+                    <label for="monthly_income" class="title">Monthly Income</label>
+                    <input type="number" id="monthly_income" name="monthly_income" placeholder="Monthly Income" required>
+                </div>
+            </div>
+
+            <div class="fields">
+                <div class="input-field">
+                    <label for="id_proof" class="title">ID Proof (Adhar PDF)</label>
+                    <input type="file" id="id_proof" name="id_proof" >
+                </div>
+            </div>
+            <div class="fields">
+                <div class="input-field">
+                    <label for="transaction_pin" class="title">4-digit PIN for Transactions</label>
+                    <input type="password" id="transaction_pin" name="transaction_pin" pattern="[0-9]{4}" placeholder="****" required>
+                </div>
+            </div>
+            <div class="field">
+                <div class="input-field">
+                    <label for="terms_conditions" class="title">Terms and Conditions</label>
+                    <p class="terms-text">By checking this box, you agree to abide by the terms and conditions outlined in our service agreement. Please read the <a href="/terms" target="_blank">terms and conditions</a> carefully before proceeding.</p>
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="terms_conditions" name="terms_conditions" required>
+                        <label for="terms_conditions">I agree to the terms of service.</label>
+                    </div>
+                </div>
+            </div>
+            <div class="fileds"></div>            
+            <button type="submit" class="btn btn-primary">{% if editing %}Update Account{% else %}Create Account{% endif %}</button>
+            <a href="/dashboard" class="dashboard-button">Back to Dashboard</a>
+        </form>
+    </div>
+</body>
+</html>

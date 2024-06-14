@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Loan Application</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap">
+    <style>
+        :root {
+        --c-gray-900: #212121;
+    
+        --c-gray-800: #2e2e2e;
+        --c-gray-700: #616161;
+        --c-gray-600: #757575;
+        --c-gray-500: #9e9e9e;
+        --c-gray-400: #bdbdbd;
+        --c-gray-300: #e0e0e0;
+        --c-gray-200: #eeeeee;
+        --c-gray-100: #f5f5f5;
+        --c-green-500: #45ffbc;
+        --c-olive-500: #e3ffa8;
+        --c-white: #ffffff;
+        --c-text-primary: var(--c-gray-900);
+        --c-text-secondary: var(--c-gray-800);
+        --c-text-tertiary: var(--c-gray-500);
+      }
+
+      body {
+        line-height: 1.5;
+        min-height: 100vh;
+        font-family: "Be Vietnam Pro", sans-serif;
+        background-color: var(--c-gray-800);
+        color: var(--c-text-primary);
+        display: flex;
+        padding-top: 3vw;
+        padding-bottom: 3vw;
+        justify-content: center;
+        margin: 0;
+      }
+
+      .loan-application-body {
+        width: 90%;
+        max-width: 1000px;
+        margin-left: 100px;
+      }
+
+      .loan-form {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1rem;
+        background-color: var(--c-gray-900);
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .loan-label {
+        color: white;
+        margin-bottom: 0.5rem;
+      }
+
+      .loan-input,
+      .loan-select,
+      .loan-textarea,
+      .loan-file {
+        padding: 0.5rem;
+        border-radius: 4px;
+        border: 1px solid var(--c-gray-400);
+        margin-bottom: 1rem;
+        width: calc(100% - 1rem); /* Adjust the width as needed */
+        color: var(--c-text-primary);
+      }
+
+      .loan-submit {
+        padding: 0.5rem 1rem;
+        background-color: var(--c-green-500);
+        color: var(--c-text-primary);
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+
+      .loan-back-button {
+        position: fixed;
+        bottom: 1rem;
+        left: 1rem; /* Adjusted to left side */
+        padding: 0.8rem 1.5rem;
+        background-color: rgb(46, 28, 206);
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        
+      }
+      .loan-back-button:hover {
+        background-color: #941c18; /* Change to the desired color on hover */
+      }
+
+      #flash-messages {
+        margin-bottom: 1rem;
+        width: 50%;
+      }
+
+      .flash-message {
+        padding: 10px;
+        border-radius: 5px;
+        margin-bottom: 10px;
+      }
+
+      .flash-success {
+        background-color: #4CAF50; /* Green */
+        color: white;
+      }
+
+      .flash-error {
+        background-color: #f44336; /* Red */
+        color: white;
+      }
+      p{
+        color: white;
+      }
+      h1{
+        color:white;
+      }
+      .loan-span {
+        color: white;
+      }
+      .loan-label[for="idPhoto"],
+      .loan-file#idPhoto {
+        color: white;
+      }
+      
+    </style>
+</head>
+<body class="loan-application-body">
+        
+        
+        <!-- Display flashed messages -->
+        <div id="flash-messages">
+          {% with messages = get_flashed_messages() %}
+              {% if messages %}
+                  {% for message in messages %}
+                      <div class="flash-message {% if 'error' in message %}flash-error{% else %}flash-success{% endif %}">
+                          {{ message }}
+                      </div>
+                  {% endfor %}
+              {% endif %}
+          {% endwith %}
+        </div>
+        <form id="loanForm" action="/loan_application" method="POST" enctype="multipart/form-data" class="loan-form">
+            <!-- Personal Information -->
+            <h1 >Loan Application Form:</h1><br>
+            <label for="name" class="loan-label">Full Name:</label>
+            <input type="text" id="name" name="name" required class="loan-input"><br>
+
+            <label for="email" class="loan-label">Email:</label>
+            <input type="email" id="email" name="email" required class="loan-input"><br>
+
+            <label for="phone" class="loan-label">Phone Number:</label>
+            <input type="tel" id="phone" name="phone" required class="loan-input"><br>
+
+            <label for="dob" class="loan-label">Date of Birth:</label>
+            <input type="date" id="dob" name="dob" required class="loan-input"><br>
+
+            <label for="address" class="loan-label">Address:</label>
+            <textarea id="address" name="address" rows="4" required class="loan-textarea"></textarea><br>
+
+            <!-- Employment Information -->
+            <label for="employer" class="loan-label">Profession:</label>
+            <input type="text" id="employer" name="employer" required class="loan-input"><br>
+
+            <label for="income" class="loan-label">Monthly Income ($):</label>
+            <input type="number" id="income" name="income" min="0" required class="loan-input"><br>
+
+            <!-- Loan Details -->
+            <label for="loanAmount" class="loan-label">Loan Amount ($):</label>
+            <input type="number" id="loanAmount" name="loanAmount" min="0" required class="loan-input"><br>
+
+            <label for="loanDuration" class="loan-label">Loan Duration (Months):</label>
+            <input type="number" id="loanDuration" name="loanDuration" min="1" required class="loan-input"><br>
+
+            <!-- Calculated loan rate display -->
+            <label for="calculatedRate" class="loan-label">Calculated Loan Interest Rate (%):</label>
+            <span id="calculatedRateValue" class="loan-span">--</span>
+
+            <p class="loan-paragraph">Interest rates may vary based on the loan amount, duration, and other factors. The calculated rate represents an estimate based on your inputs.</p>
+
+            <!-- Display the total amount -->
+            <label for="totalAmount" class="loan-label">Total Amount:</label>
+            <span id="totalAmount" class="loan-span">--</span>
+
+            <label for="loanPurpose" class="loan-label">Loan Purpose:</label>
+            <select id="loanPurpose" name="loanPurpose" required class="loan-select">
+                <option value="home">Home Improvement</option>
+                <option value="education">Education</option>
+                <option value="car">Car Purchase</option>
+                <option value="business">Business Investment</option>
+                <option value="personal">Personal Expenses</option>
+                <option value="gold">Gold</option>
+                <!-- Add more options as needed -->
+            </select><br>
+
+            <!-- Input field for ID photograph upload -->
+            <label for="idPhoto" class="loan-label">Upload ID Photograph:</label>
+            <input type="file" id="idPhoto" name="idPhoto" accept="image/*" required class="loan-file"><br>
+
+            <!-- Submit button -->
+            <button type="submit" class="loan-submit">Submit Application</button>
+        </form>
+    </div>
+
+    <!-- Button to go back to dashboard -->
+    <button type="button" id="nextButton" onclick="redirectToDashboard()" class="loan-back-button">Back to Dashboard</button>
+
+    <!-- Add JavaScript for form submission and interest rate calculation -->
+    <script src="../static/js/loan_application.js"></script>
+    <script>
+        function redirectToDashboard() {
+            window.location.href = '/dashboard';
+        }
+    </script>
+</body>
+</html>

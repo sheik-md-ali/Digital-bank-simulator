@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Users</title>
+    <!-- Add any CSS links or stylesheets here -->
+    <style>
+        /* Body styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* Table styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        th, td {
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #007bff;
+            color: #fff;
+            text-transform: uppercase;
+        }
+        td {
+            color: #333;
+        }
+        .profile-photo-link {
+            display: block;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        .profile-photo-link img {
+            width: 100%;
+            height: auto;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            overflow: auto;
+        }
+        .modal-content {
+        margin: 20px auto;
+        background-color: transparent;
+        border-radius: 8px;
+        padding: 20px;
+        max-width: 300px; 
+        max-height: 300px; 
+        text-align: center; 
+        overflow: hidden; 
+        }
+
+        .modal-content img {
+        max-width: 300px;
+        max-height: 300px;
+        width: auto;
+        height: auto;
+        display: block;
+        margin: auto;
+        border: none;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Back button style */
+        .back-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>List of Users</h1>
+    <a href="{{ url_for('admin_dashboard') }}" class="back-button">Back to Dashboard</a>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Profile Photo</th> <!-- New column for profile photo -->
+                <!-- Add additional columns as needed -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.first_name }}</td>
+                <td>{{ user.last_name }}</td>
+                <td>{{ user.email }}</td>
+                <td>
+                    {% if user.get_profile_picture() %}
+                        <span class="profile-photo-link" onclick="openModal('{{ user.get_profile_picture() }}')">
+                            <img src="data:image/jpeg;base64,{{ user.get_profile_picture() }}" alt="Profile Photo">
+                        </span>
+                    {% else %}
+                        No photo available
+                    {% endif %}
+                </td>
+                <!-- Add additional columns as needed -->
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Modal for displaying larger image -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <img id="modal-img" src="" alt="Modal Image">
+        </div>
+    </div>
+
+    <script>
+        function openModal(imageData) {
+            var modal = document.getElementById("myModal");
+            var modalImg = document.getElementById("modal-img");
+            modal.style.display = "block";
+            modalImg.src = "data:image/jpeg;base64," + imageData;
+        }
+
+        function closeModal() {
+            var modal = document.getElementById("myModal");
+            modal.style.display = "none";
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Loan Applications</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* Body styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* Table styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        th, td {
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #007bff;
+            color: #fff;
+            text-transform: uppercase;
+        }
+        td {
+            color: #333;
+        }
+        .profile-photo-link {
+            display: block;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        .profile-photo-link img {
+            width: 100%;
+            height: auto;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            overflow: auto;
+        }
+        .modal-content {
+            margin: 20px auto;
+            background-color: transparent;
+            border-radius: 8px;
+            padding: 20px;
+            max-width: 300px; 
+            max-height: 300px; 
+            text-align: center; 
+            overflow: hidden; 
+        }
+
+        .modal-content img {
+            max-width: 300px;
+            max-height: 300px;
+            width: auto;
+            height: auto;
+            display: block;
+            margin: auto;
+            border: none;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Back button style */
+        .back-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+        .approve-button,
+        .reject-button {
+            display: inline-block;
+            padding: 8px 16px;
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            font-size: 16px;
+            margin: 4px 2px;
+            transition-duration: 0.4s;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .approve-button:hover,
+        .reject-button:hover {
+            background-color: #45a049; /* Darker green */
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Loan Applications</h1>
+    <a href="{{ url_for('admin_dashboard') }}" class="back-button">Back to Dashboard</a>
+    {% if messages %}
+    <div id="flash-messages">
+        {% for message in messages %}
+        <div class="flash-message">{{ message }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Profile Photo</th>
+                <th>Account No</th>
+                <th>Details</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for loan_application in loan_applications %}
+            <tr>
+                <td>{{ loan_application.user.first_name }} {{ loan_application.user.last_name }}</td>
+                <td>
+                    {% if loan_application.user.profile_picture %}
+                        <img src="data:image/jpeg;base64,{{ loan_application.user.get_profile_picture() }}" alt="Profile Photo">
+                    {% else %}
+                        No photo available
+                    {% endif %}
+                </td>
+                <td>{{ loan_application.user.bank_account_number }}</td>
+                <td>
+                    <ul>
+                        <li><strong>Email:</strong> {{ loan_application.user.email }}</li>
+                        <!-- Add more user-related fields here -->
+                        <li><strong>DOB:</strong> {{ loan_application.dob }}</li>
+                        <li><strong>Address:</strong> {{ loan_application.address }}</li>
+                        <li><strong>Employer:</strong> {{ loan_application.employer }}</li>
+                        <li><strong>Income:</strong> {{ loan_application.income }}</li>
+                        <li><strong>Loan Amount:</strong> {{ loan_application.loan_amount }}</li>
+                        <li><strong>Loan Duration:</strong> {{ loan_application.loan_duration }}</li>
+                        <li><strong>Loan Purpose:</strong> {{ loan_application.loan_purpose }}</li>
+                    </ul>
+                </td>
+                <td>
+                    <form id="approve-form-{{ loan_application.id }}" action="/admin/approve_loan/{{ loan_application.id }}" method="POST">
+                        <button type="button" class="approve-button" onclick="confirmAction('approve', '{{ loan_application.id }}')">Approve</button>
+                    </form>
+                    <form id="reject-form-{{ loan_application.id }}" action="/admin/reject_loan/{{ loan_application.id }}" method="POST">
+                        <button type="button" class="reject-button" onclick="confirmAction('reject', '{{ loan_application.id }}')">Reject</button>
+                    </form>
+                </td>                
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Modal for displaying profile photo -->
+    <div id="profileModal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="profilePhoto">
+    </div>
+
+    <script>
+        function showModal(photoUrl) {
+            document.getElementById('profilePhoto').src = "data:image/jpeg;base64," + photoUrl;
+            document.getElementById('profileModal').style.display = "block";
+        }
+
+        function closeModal() {
+            document.getElementById('profileModal').style.display = "none";
+        }
+
+        function confirmAction(action, loanId) {
+            if (confirm("Are you sure you want to " + action + " this loan application?")) {
+                if (action === 'approve') {
+                    document.getElementById('approve-form-' + loanId).submit();
+                } else if (action === 'reject') {
+                    document.getElementById('reject-form-' + loanId).submit();
+                }
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <style>
+        /* CSS styles */
+        body {
+            font-family: 'Be Vietnam Pro', sans-serif;
+            background-color: #000000;
+            color: #ffffff;
+        }
+
+        .profile-picture {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 5px solid #ffffff; /* White border */
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3); /* Box shadow */
+        }
+
+        .profile-details {
+            background-color: #313131; /* Dark gray background */
+            border: 1px solid #2e2e2e; /* Dark gray border */
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3); /* Box shadow */
+            color: #ffffff; /* White color */
+        }
+
+        .bank-details {
+            background-color: #313131; /* Dark gray background */
+            border: 1px solid #2e2e2e; /* Dark gray border */
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3); /* Box shadow */
+            color: #ffffff; /* White color */
+        }
+
+        .bank-details h4 {
+            color: #45ffbc; /* Green color */
+            margin-bottom: 20px;
+        }
+
+        .box {
+            background-color: #313131; /* Dark gray background */
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid #2e2e2e; /* Dark gray border */
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3); /* Box shadow */
+            color: #ffffff; /* White color */
+        }
+
+        .box strong {
+            display: block;
+            margin-bottom: 10px;
+            color: #bdbbb7; /* Light gray color */
+        }
+
+        .edit-profile-btn,
+        .back-to-dashboard-btn {
+            margin-top: 20px;
+        }
+
+        .content-below-profile {
+            margin-top: 20px;
+            color: #bdbbb7; /* Light gray color */
+        }
+
+        /* Apply hover effect to the back-to-dashboard button */
+        .back-to-dashboard-btn:hover {
+            background-color: #1f1f1f; /* Darker gray background */
+            border-color: #1f1f1f; /* Darker gray border */
+        }
+
+        /* Apply hover effect to the boxes */
+        .box:hover {
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5); /* Darker box shadow on hover */
+        }
+
+        /* Customizing Bootstrap buttons */
+        .btn {
+            background-color: #154433; /* Green color */
+            border-color: #45ffbc; /* Green border color */
+        }
+
+        .btn:hover {
+            background-color: #2e2e2e; /* Dark gray background on hover */
+            border-color: #04fd11; /* Dark gray border color on hover */
+        }
+
+        .btn-secondary {
+            background-color: #552c2c; /* Dark gray background for secondary button */
+            border-color: #ff0101; /* Dark gray border color for secondary button */
+        }
+
+        .btn-secondary:hover {
+            background-color: #301e1e; /* Darker gray background for secondary button on hover */
+            border-color: #fa0505; /* Darker gray border color for secondary button on hover */
+            box-shadow: #04fd11;
+        }
+        /* CSS for upload form */
+        .upload-form {
+        width: 300px; /* Adjust width as needed */
+        border: 1px solid #ddd; /* Add border */
+        padding: 10px; /* Add padding */
+        border-radius: 5px; /* Add border radius */
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        }
+
+        .upload-form form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .upload-btn {
+            background-color: #38019c; /* Dark gray color */
+            color: #ffffff; /* White color */
+            padding: 10px 20px;
+            border-radius: 5px;
+            border-color: #38019c;
+            cursor: pointer;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Add transition for smoother hover effect */
+            box-shadow: 0 0 o rgba(3, 255, 66, 0.973); /* Transparent shadow by default */
+            margin: 10px 0; /* Add margin for space between buttons */
+            margin: left 10px;;
+        }
+
+        .upload-btn:last-child {
+            margin-bottom: 0; /* Remove bottom margin from last button to prevent extra space */
+        }
+
+        .upload-btn:hover {
+            background-color: #292f52; /* Green color on hover */
+            box-shadow:5px rgba(12, 243, 4, 0.952); /* Green shadow effect on hover */
+        }
+
+        .upload-btn:focus {
+            outline: none; /* Remove outline on focus */
+        }
+
+        .upload-btn:active {
+            transform: translateY(1px); /* Add slight y-axis movement on click */
+        }
+
+        .file-input {
+            flex: 1; /* Take remaining space */
+            margin-left: 10px; /* Add margin */
+        }
+        .upload-btn label {
+            cursor: pointer; /* Change cursor to pointer when hovering over label */
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="text-center">
+                    {% if user.get_profile_picture() %}
+                        <img class="rounded-circle profile-picture" src="data:image/jpeg;base64,{{ user.get_profile_picture() }}" alt="Profile Picture">
+                    {% else %}
+                        <!-- Default profile picture -->
+                        <img class="rounded-circle profile-picture" src="default_profile_picture.jpg" alt="Profile Picture">
+                    {% endif %}
+                    <div class="profile-details mt-3">
+                        <h4>{{ user.first_name }} {{ user.last_name }}</h4>
+                        <p>{{ user.email }}</p>
+                    </div>
+                    <div class="button-container">
+                        <a href="/dashboard" class="btn btn-secondary back-to-dashboard-btn">Back to Dashboard</a>
+                        <!-- Link to edit profile with parameter indicating edit mode -->
+                        <a href="/create_account?edit=true" class="btn btn-primary edit-profile-btn">Edit Profile</a>
+                    </div>
+                    
+                </div>
+                <div class="content-below-profile">
+                    <!-- Additional content below the profile details can be added here if needed -->
+                </div>
+                <div class="upload-form">
+                    <form action="/upload_profile_picture" method="POST" enctype="multipart/form-data">
+                        <label for="profile-picture" class="upload-btn">Upload Picture</label>
+                        <input type="file" id="profile-picture" name="profile_picture" class="file-input">
+                        <input type="submit" value="Submit" class="upload-btn">
+                    </form>
+                </div>
+                  
+            </div>
+            <div class="col-md-8">
+                <div class="bank-details">
+                    <h4>Bank Account Details</h4>
+                    <div class="row mt-3">
+                        <!-- Bank account details -->
+                        <div class="col-md-6">
+                            <div class="box">
+                                <strong>Account Number:</strong>
+                                <p>{{ user.bank_account_number }}</p>
+                            </div>
+                            <div class="box">
+                                <strong>Date of Birth:</strong>
+                                <p>{{ user_bank_account.dob }}</p>
+                            </div>
+                            <div class="box">
+                                <strong>Gender:</strong>
+                                <p>{{ user_bank_account.gender }}</p>
+                            </div>
+                            <div class="box">
+                                <strong>Telephone:</strong>
+                                <p>{{ user_bank_account.telephone }}</p>
+                            </div>
+                            <div class="box">
+                                <strong>Occupation:</strong>
+                                <p>{{ user_bank_account.occupation }}</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="box">
+                                <strong>City:</strong>
+                                <p>{{ user_bank_account.city }}</p>
+                            </div>
+                            <div class="box">
+                                <strong>Postal Code:</strong>
+                                <p>{{ user_bank_account.postal_code }}</p>
+                            </div>
+                            <div class="box">
+                                <strong>State:</strong>
+                                <p>{{ user_bank_account.state }}</p>
+                            </div>
+                            <div class="box">
+                                <strong>Country:</strong>
+                                <p>{{ user_bank_account.country }}</p>
+                            </div>
+                            <div class="box">
+                                <strong>Citizenship:</strong>
+                                <p>{{ user_bank_account.citizenship }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Bootstrap JS Bundle and jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

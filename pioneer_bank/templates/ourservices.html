@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Our Services</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;1,300&display=swap');
+
+      *{
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+          font-family: 'Poppins', sans-serif;
+      }
+
+      body{
+          height: 100vh;
+          position: relative;
+          background: #111;
+          color: white;
+      }
+
+      .container{
+          height: 100%;
+          padding-top: 30px;
+          width: 80%;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%,-50%);
+      }
+
+      .container h2{
+          text-align: center;
+          text-transform: uppercase;
+          font-size: 35px;
+          margin-bottom: 25px;
+          font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+      }
+
+      .container .services{
+          justify-content: space-around;
+          display: flex;
+          flex-wrap: wrap;
+          align-items: center;
+      }
+
+      .container .services .card{
+          width: 330px;
+          text-align: center;
+          background: #222;
+          padding: 20px 15px;
+          margin-bottom: 30px;
+          border-radius: 10px;
+          cursor: pointer;
+          transition: 0.3s;
+      }
+
+      .container .services .card:hover{
+          background: blueviolet;
+      }
+
+      .container .services .card .content{
+          transition: 0.3s;
+      }
+
+      .container .services .card:hover .content{
+          transform: scale(1.07);
+      }
+
+      .container .services .card .content .icon{
+          padding: 5px 0;
+          color: white;
+      }
+
+      .container .services .card .content .icon i{
+          font-size: 40px;
+      }
+
+      .container .services .card:hover .content .title{
+          color: white;
+      }
+
+      .container .services .card .content .title{
+          padding: 5px 0;
+          font-size: 24px;
+          font-weight: 500;
+          color: blueviolet;
+          transition: 0.3s;
+      }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Our Services</h2>
+        <section class="services">
+            <div class="card">
+                <div class="content">
+                    <div class="icon"><i class="fa fa-university"></i></div>
+                    <div class="title">Best Banking Solutions</div>
+                    <p>Experience top-notch banking services tailored to your needs. We provide innovative solutions to enhance your banking experience.</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="content">
+                    <div class="icon"><i class="fa fa-phone"></i></div>
+                    <div class="title">24/7 Support</div>
+                    <p>Get round-the-clock support from our dedicated team. We're here to assist you at any time, ensuring smooth transactions and resolving queries promptly.</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="content">
+                    <div class="icon"><i class="fa fa-check-circle"></i></div>
+                    <div class="title">Everything You Need</div>
+                    <p>From account management to loan services, we offer everything you need under one roof. Enjoy convenience and efficiency in managing your finances.</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="content">
+                    <div class="icon"><i class="fa fa-exchange"></i></div>
+                    <div class="title">Seamless Transactions</div>
+                    <p>Experience hassle-free and secure transactions with our advanced banking systems. Your financial transactions are processed seamlessly, ensuring reliability and peace of mind.</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="content">
+                    <div class="icon"><i class="fa fa-line-chart"></i></div>
+                    <div class="title">Financial Planning</div>
+                    <p>Benefit from our expert financial planning services to help you achieve your financial goals. We provide personalized advice and strategies for your financial success.</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="content">
+                    <div class="icon"><i class="fa fa-lock"></i></div>
+                    <div class="title">Secure Banking</div>
+                    <p>Rest assured with our robust security measures to protect your accounts and sensitive information. Your security is our top priority.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+</body>
+</html>
