@@ -1,57 +1,110 @@
-🚀 Pioneer Bank - Simplified Banking Workflow
+# 🏦 Pioneer Bank – Digital Banking Simulator
 
-Pioneer Bank is a secure and user-friendly digital banking system that streamlines financial transactions and loan management. Here’s how it works:
+A secure, full-stack **Flask + MySQL** web application simulating a real-world digital bank. Features include user registration, login, balance checking, money transfer, profile photo handling, and transaction history — all backed by a clean UI and secure backend.
 
+---
 
+## 📘 README.md
 
-👤 User Registration & Login
+```markdown
+# 🏦 Pioneer Bank – Flask-Based Digital Bank Simulator
 
-1️⃣ Sign Up – Users register with their details and create a secure password.
-2️⃣ Login – Secure authentication to access banking features.
+A complete banking simulation system built with Flask and MySQL, ideal for educational or prototype-level digital finance applications.
 
+---
 
+## 🚀 Features
 
+- 🔐 **Secure Authentication** using `bcrypt`
+- 💳 **Transfer Funds** between registered users
+- 📁 **Profile Picture Upload** (Base64 encoded and rendered)
+- 📊 **Transaction History** with timestamps and filtering
+- 🌐 **Responsive UI** with Flask & Jinja2 templates
+- 🧠 **ORM Support** with SQLAlchemy
+- 🔒 **Session Management** and flash-based notifications
 
-🏦 Account Management
+---
 
-✔️ Open a Bank Account – Users receive a unique account number.
-✔️ Profile Update – Edit personal details and upload a profile picture.
+## 🛠 Tech Stack
 
+- **Backend:** Python, Flask, SQLAlchemy
+- **Frontend:** HTML5, CSS3, Bootstrap 5, Jinja2
+- **Database:** MySQL (via PyMySQL)
+- **Security:** bcrypt password hashing
+- **Image Handling:** Pillow (PIL)
 
+---
 
+## 🗂 Directory Structure
 
-💸 Fund Transfers & Transactions
+```
+pioneer-bank/
+├── static/               # CSS, images, etc.
+├── templates/            # Jinja2 HTML templates
+├── app.py                # Main Flask app
+├── requirements.txt      # Python dependencies
+└── README.md             # Project overview
+```
 
-🔹 Deposit & Withdraw – Manage funds securely.
-🔹 Send Money – Transfer funds to other accounts.
-🔹 Transaction History – View past transactions with timestamps.
+---
 
+## ⚙️ Installation & Setup
 
+### 1. Clone the Repository
 
+```bash
+git clone https://github.com/sheik-md-ali/pioneer-bank.git
+cd pioneer-bank
+```
 
-💰 Loan Application & Approval
+### 2. Create and Activate a Virtual Environment
 
-📌 Apply for a Loan – Users submit a request with necessary details.
-📌 Admin Review – Admin verifies and approves/rejects applications.
-📌 Loan Disbursal – Approved funds are credited to the user’s account.
+```bash
+python -m venv venv
+source venv/bin/activate   # Windows: venv\Scripts\activate
+```
 
+### 3. Install Python Dependencies
 
+```bash
+pip install -r requirements.txt
+```
 
+### 4. Setup the MySQL Database
 
-🔐 Security & Admin Controls
+- Create a database named `pioneer_bank`
+- Configure DB URI in `app.py` or `__init__.py`:
 
-🛡️ Secure Transactions – Encrypted user data and secure PIN verification.
-🛠️ Admin Dashboard – Manage users, track transactions, and review loan requests.
+```python
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://username:password@localhost/pioneer_bank'
+```
 
+### 5. Run the Flask App
 
+```bash
+flask run
+```
 
+> 🔗 Visit the app at: [http://127.0.0.1:5000](http://127.0.0.1:5000)
 
-📢 Why Pioneer Bank?
+---
 
-✅ User-Centric Design – Easy to use and navigate.
-✅ Secure & Reliable – Strong encryption and authentication.
-✅ Seamless Banking Experience – Hassle-free transactions and loan management.
+## 🧪 Sample Test Data
 
+You can register a new account directly from the frontend. All transfers are logged in the transaction table.
 
+---
 
-📩 Let’s Connect! If you're interested in fintech or web development, feel free to reach out! 🚀
+## 🙋‍♂️ Author
+
+**Sheik Mohammed Ali M.**  
+📧 mdali.sheik1613@gmail.com  
+🌐 [GitHub](https://github.com/sheik-md-ali)
+
+---
+
+## 📜 License
+
+MIT License – free to use, modify, and distribute.
+```
+
