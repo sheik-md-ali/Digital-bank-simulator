@@ -1,15 +1,6 @@
-# 🏦 Pioneer Bank – Digital Banking Simulator
-
-A secure, full-stack **Flask + MySQL** web application simulating a real-world digital bank. Features include user registration, login, balance checking, money transfer, profile photo handling, and transaction history — all backed by a clean UI and secure backend.
-
----
-
-## 📘 README.md
-
-```markdown
 # 🏦 Pioneer Bank – Flask-Based Digital Bank Simulator
 
-A complete banking simulation system built with Flask and MySQL, ideal for educational or prototype-level digital finance applications.
+A secure, full-stack **Flask + MySQL** web application simulating a real-world digital bank. Features include user registration, login, balance checking, money transfer, profile photo handling, and transaction history — all backed by a clean UI and secure backend.
 
 ---
 
@@ -53,15 +44,15 @@ pioneer-bank/
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/sheik-md-ali/pioneer-bank.git
-cd pioneer-bank
+git clone https://github.com/sheik-md-ali/Digital-bank-simulator.git
+cd Digital-bank-simulator/pioneer_bank
 ```
 
 ### 2. Create and Activate a Virtual Environment
 
 ```bash
 python -m venv venv
-source venv/bin/activate   # Windows: venv\Scripts\activate
+source venv/bin/activate   # On Windows: venv\Scripts\activate
 ```
 
 ### 3. Install Python Dependencies
@@ -73,11 +64,13 @@ pip install -r requirements.txt
 ### 4. Setup the MySQL Database
 
 - Create a database named `pioneer_bank`
-- Configure DB URI in `app.py` or `__init__.py`:
+- Configure your DB URI in `app.py`:
 
 ```python
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://username:password@localhost/pioneer_bank'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://<username>:<password>@localhost/pioneer_bank'
 ```
+
+Replace `<username>` and `<password>` with your MySQL credentials.
 
 ### 5. Run the Flask App
 
@@ -85,13 +78,25 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://username:password@local
 flask run
 ```
 
-> 🔗 Visit the app at: [http://127.0.0.1:5000](http://127.0.0.1:5000)
+Then visit: [http://127.0.0.1:5000](http://127.0.0.1:5000)
 
 ---
 
 ## 🧪 Sample Test Data
 
-You can register a new account directly from the frontend. All transfers are logged in the transaction table.
+You can register a new account from the UI. Transactions and balances will be reflected in the dashboard.
+
+---
+
+## 📦 requirements.txt
+
+```txt
+Flask
+Flask-SQLAlchemy
+pymysql
+bcrypt
+Pillow
+```
 
 ---
 
@@ -106,5 +111,3 @@ You can register a new account directly from the frontend. All transfers are log
 ## 📜 License
 
 MIT License – free to use, modify, and distribute.
-```
-
